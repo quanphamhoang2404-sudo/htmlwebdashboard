@@ -2,929 +2,839 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Bubble World ✨</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>NEON PLAYGROUND</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    user-select:none;
 }
 
-:root {
-    --main: #9b5cff;
-    --main2: #ff62d0;
-    --blue: #55c7ff;
-    --text: #ffffff;
-}
-
-body {
-    min-height: 100vh;
-    overflow-x: hidden;
-    font-family: 'Baloo 2', cursive;
-    color: var(--text);
-
+body{
+    font-family:'Baloo 2',cursive;
+    min-height:100vh;
+    color:white;
     background:
-        radial-gradient(circle at 20% 20%, #7b42ff55, transparent 30%),
-        radial-gradient(circle at 80% 30%, #ff43c755, transparent 30%),
-        radial-gradient(circle at 50% 90%, #00c8ff44, transparent 35%),
-        #090719;
-
-    background-size: 200% 200%;
-    animation: backgroundMove 12s ease infinite;
+        radial-gradient(circle at 20% 20%,#6c35ff55,transparent 30%),
+        radial-gradient(circle at 80% 80%,#00d9ff44,transparent 30%),
+        #080812;
+    overflow-x:hidden;
 }
 
-@keyframes backgroundMove {
-    0% { background-position: 0% 0%; }
-    50% { background-position: 100% 100%; }
-    100% { background-position: 0% 0%; }
+body:before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.25;
+    background-image:
+        linear-gradient(#ffffff08 1px,transparent 1px),
+        linear-gradient(90deg,#ffffff08 1px,transparent 1px);
+    background-size:40px 40px;
 }
 
-/* BONG BÓNG */
-
-.bubbles {
-    position: fixed;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 0;
+header{
+    width:min(1100px,94%);
+    margin:20px auto;
+    padding:15px 22px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border:1px solid #ffffff18;
+    background:#ffffff0b;
+    backdrop-filter:blur(20px);
+    border-radius:22px;
 }
 
-.bubble {
-    position: absolute;
-    bottom: -150px;
+.logo{
+    font-size:27px;
+    font-weight:800;
+    background:linear-gradient(90deg,#fff,#b88cff,#54eaff);
+    -webkit-background-clip:text;
+    color:transparent;
+}
 
-    border-radius: 50%;
+.coins{
+    padding:8px 15px;
+    border-radius:15px;
+    background:#ffffff10;
+    border:1px solid #ffffff18;
+    font-weight:700;
+}
 
+main{
+    width:min(1100px,94%);
+    margin:auto;
+}
+
+.hero{
+    text-align:center;
+    padding:45px 0 25px;
+}
+
+.hero h1{
+    font-size:clamp(50px,9vw,100px);
+    line-height:.85;
+    font-weight:800;
+    background:linear-gradient(135deg,#fff,#ad83ff,#4eeaff);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.hero p{
+    color:#aaaabd;
+    font-size:18px;
+    margin-top:20px;
+}
+
+.tabs{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin:30px 0;
+}
+
+button{
+    font-family:inherit;
+    border:0;
+    cursor:pointer;
+}
+
+.tab{
+    padding:11px 20px;
+    border-radius:15px;
+    background:#ffffff0b;
+    border:1px solid #ffffff15;
+    color:#bbb;
+    font-size:16px;
+    transition:.2s;
+}
+
+.tab:hover,.tab.active{
+    color:white;
+    background:#8d5cff33;
+    border-color:#a77aff66;
+    transform:translateY(-2px);
+}
+
+.panel{
+    display:none;
+}
+
+.panel.active{
+    display:block;
+}
+
+.game{
+    position:relative;
+    height:470px;
+    overflow:hidden;
+    border-radius:30px;
+    border:1px solid #ffffff18;
     background:
-        radial-gradient(circle at 30% 25%,
-        #ffffffaa 0%,
-        #ffffff22 15%,
-        transparent 45%);
+        radial-gradient(circle at 50% 50%,#5d37ff13,transparent 50%),
+        #ffffff06;
+    box-shadow:0 20px 70px #0008;
+}
 
-    border: 1px solid #ffffff44;
+.game-info{
+    position:absolute;
+    top:18px;
+    left:18px;
+    right:18px;
+    display:flex;
+    justify-content:space-between;
+    z-index:5;
+}
 
+.stat{
+    padding:8px 14px;
+    border-radius:13px;
+    background:#080812aa;
+    border:1px solid #ffffff15;
+}
+
+.target{
+    position:absolute;
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    display:none;
+    place-items:center;
+    background:radial-gradient(circle,#fff 0 8%,#55eaff 10% 30%,#7657ff 32% 60%,#211747 62%);
     box-shadow:
-        inset 0 0 25px #ffffff22,
-        0 0 25px #ffffff18;
-
-    animation: floatUp linear infinite;
+        0 0 20px #65eaff,
+        0 0 50px #705bff;
+    animation:pop .12s ease-out;
+    cursor:crosshair;
 }
 
-@keyframes floatUp {
-    from {
-        transform: translateY(0) translateX(0) rotate(0);
-        opacity: 0;
-    }
-
-    10% {
-        opacity: 1;
-    }
-
-    90% {
-        opacity: 1;
-    }
-
-    to {
-        transform: translateY(-120vh) translateX(100px) rotate(360deg);
-        opacity: 0;
-    }
+.target:after{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    border:2px solid #ffffff66;
+    border-radius:50%;
+    transform:scale(1.35);
 }
 
-.bubble:nth-child(1) {
-    width: 90px;
-    height: 90px;
-    left: 8%;
-    animation-duration: 12s;
+@keyframes pop{
+    from{transform:scale(.2);opacity:0}
+    to{transform:scale(1);opacity:1}
 }
 
-.bubble:nth-child(2) {
-    width: 45px;
-    height: 45px;
-    left: 22%;
-    animation-duration: 8s;
-    animation-delay: 2s;
+.start{
+    position:absolute;
+    inset:0;
+    display:grid;
+    place-items:center;
+    z-index:4;
 }
 
-.bubble:nth-child(3) {
-    width: 130px;
-    height: 130px;
-    left: 40%;
-    animation-duration: 16s;
-    animation-delay: 4s;
+.start button,.bigbtn{
+    padding:15px 30px;
+    border-radius:18px;
+    color:white;
+    font-size:19px;
+    font-weight:700;
+    background:linear-gradient(135deg,#7652ff,#00bde8);
+    box-shadow:0 10px 35px #6554ff55;
+    transition:.2s;
 }
 
-.bubble:nth-child(4) {
-    width: 60px;
-    height: 60px;
-    left: 65%;
-    animation-duration: 10s;
-    animation-delay: 1s;
+.start button:hover,.bigbtn:hover{
+    transform:scale(1.06);
 }
 
-.bubble:nth-child(5) {
-    width: 110px;
-    height: 110px;
-    left: 85%;
-    animation-duration: 14s;
-    animation-delay: 3s;
+.result{
+    text-align:center;
+    margin-top:20px;
+    color:#aaaabd;
 }
 
-/* CONTAINER */
-
-.container {
-    position: relative;
-    z-index: 2;
-
-    width: min(1100px, 92%);
-    margin: auto;
-    padding: 35px 0 60px;
+.card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:18px;
 }
 
-/* NAVBAR */
-
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 15px 22px;
-
-    border: 1px solid #ffffff22;
-    border-radius: 25px;
-
-    background: #ffffff0d;
-    backdrop-filter: blur(18px);
-
-    box-shadow:
-        0 10px 40px #00000033,
-        inset 0 0 20px #ffffff08;
+.card{
+    padding:25px;
+    min-height:180px;
+    border-radius:25px;
+    background:#ffffff08;
+    border:1px solid #ffffff15;
+    transition:.25s;
 }
 
-.logo {
-    font-size: 25px;
-    font-weight: 800;
-
-    background: linear-gradient(
-        90deg,
-        #fff,
-        #ff7de3,
-        #6ddcff,
-        #fff
-    );
-
-    background-size: 300%;
-    -webkit-background-clip: text;
-    color: transparent;
-
-    animation: rainbow 5s linear infinite;
+.card:hover{
+    transform:translateY(-6px);
+    border-color:#8d68ff66;
 }
 
-@keyframes rainbow {
-    to {
-        background-position: 300%;
-    }
+.card h2{
+    margin-bottom:8px;
 }
 
-.nav-buttons {
-    display: flex;
-    gap: 8px;
+.card p{
+    color:#aaaabd;
 }
 
-.icon-btn {
-    width: 42px;
-    height: 42px;
-
-    border: 1px solid #ffffff20;
-    border-radius: 50%;
-
-    background: #ffffff0d;
-    color: white;
-
-    cursor: pointer;
-    font-size: 18px;
-
-    transition: .3s;
+.shop-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
 }
 
-.icon-btn:hover {
-    transform: translateY(-4px) scale(1.1);
-    background: #ffffff22;
+.buy{
+    padding:9px 15px;
+    border-radius:12px;
+    background:#7652ff;
+    color:white;
 }
 
-/* HERO */
-
-.hero {
-    text-align: center;
-    padding: 90px 10px 60px;
+.buy:disabled{
+    opacity:.4;
+    cursor:not-allowed;
 }
 
-.badge {
-    display: inline-block;
-
-    padding: 8px 18px;
-    margin-bottom: 20px;
-
-    border: 1px solid #ffffff25;
-    border-radius: 999px;
-
-    background: #ffffff0c;
-    backdrop-filter: blur(10px);
-
-    color: #dcd2ff;
-    font-size: 15px;
+.reaction{
+    height:380px;
+    border-radius:30px;
+    display:grid;
+    place-items:center;
+    text-align:center;
+    border:1px solid #ffffff15;
+    background:#ffffff07;
+    cursor:pointer;
 }
 
-.hero h1 {
-    font-size: clamp(55px, 10vw, 115px);
-    line-height: .85;
-
-    font-weight: 800;
-
-    letter-spacing: -3px;
-
-    background: linear-gradient(
-        135deg,
-        #ffffff,
-        #e8c5ff,
-        #ff72db,
-        #62d9ff
-    );
-
-    -webkit-background-clip: text;
-    color: transparent;
-
-    filter: drop-shadow(0 10px 30px #9b5cff44);
+.reaction h2{
+    font-size:45px;
 }
 
-.hero p {
-    max-width: 600px;
-    margin: 30px auto;
-
-    color: #c9c4dc;
-    font-size: 19px;
+#reactionBox.wait{
+    background:#ff3b4f;
 }
 
-/* BUTTON */
-
-.main-btn {
-    position: relative;
-
-    border: none;
-    border-radius: 999px;
-
-    padding: 15px 30px;
-
-    font-family: inherit;
-    font-size: 18px;
-    font-weight: 700;
-
-    color: white;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--main),
-            var(--main2)
-        );
-
-    cursor: pointer;
-
-    box-shadow:
-        0 10px 30px #9b5cff55;
-
-    transition: .3s;
-
-    overflow: hidden;
+#reactionBox.go{
+    background:#27d98b;
 }
 
-.main-btn::before {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    left: -100%;
-
-    width: 100%;
-    height: 100%;
-
-    background: linear-gradient(
-        90deg,
-        transparent,
-        #ffffff66,
-        transparent
-    );
-
-    transition: .5s;
+.lucky{
+    text-align:center;
+    padding:70px 20px;
+    border-radius:30px;
+    background:#ffffff07;
+    border:1px solid #ffffff15;
 }
 
-.main-btn:hover::before {
-    left: 100%;
+.lucky-result{
+    min-height:70px;
+    margin:25px;
+    font-size:30px;
+    font-weight:800;
 }
 
-.main-btn:hover {
-    transform: translateY(-5px) scale(1.04);
-    box-shadow:
-        0 15px 40px #ff62d055;
+footer{
+    text-align:center;
+    color:#69697d;
+    padding:50px 0 30px;
 }
 
-/* CARDS */
-
-.cards {
-    display: grid;
-
-    grid-template-columns:
-        repeat(auto-fit, minmax(230px, 1fr));
-
-    gap: 20px;
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:25px;
+    transform:translateX(-50%) translateY(100px);
+    padding:12px 22px;
+    border-radius:15px;
+    background:#151522ee;
+    border:1px solid #ffffff20;
+    z-index:100;
+    transition:.3s;
 }
 
-.card {
-    position: relative;
-
-    padding: 28px;
-
-    min-height: 190px;
-
-    border-radius: 30px;
-
-    border: 1px solid #ffffff18;
-
-    background: linear-gradient(
-        145deg,
-        #ffffff12,
-        #ffffff05
-    );
-
-    backdrop-filter: blur(20px);
-
-    box-shadow:
-        0 15px 40px #00000022,
-        inset 0 0 30px #ffffff08;
-
-    overflow: hidden;
-
-    transition: .35s;
+.toast.show{
+    transform:translateX(-50%) translateY(0);
 }
 
-.card::after {
-    content: "";
-
-    position: absolute;
-
-    width: 130px;
-    height: 130px;
-
-    right: -50px;
-    top: -50px;
-
-    border-radius: 50%;
-
-    background: #ffffff08;
-}
-
-.card:hover {
-    transform: translateY(-10px);
-    border-color: #ffffff35;
-
-    box-shadow:
-        0 25px 60px #00000044,
-        0 0 30px #9b5cff22;
-}
-
-.card-icon {
-    font-size: 42px;
-    margin-bottom: 10px;
-}
-
-.card h2 {
-    font-size: 25px;
-}
-
-.card p {
-    margin-top: 5px;
-    color: #aaa5bd;
-}
-
-/* COUNTER */
-
-.counter {
-    margin-top: 20px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-
-    padding: 25px;
-
-    border-radius: 30px;
-
-    background: #ffffff09;
-    border: 1px solid #ffffff15;
-
-    backdrop-filter: blur(15px);
-}
-
-.number {
-    font-size: 50px;
-    font-weight: 800;
-
-    background: linear-gradient(
-        135deg,
-        #fff,
-        #ff70d8,
-        #69d9ff
-    );
-
-    -webkit-background-clip: text;
-    color: transparent;
-}
-
-/* CLOCK */
-
-.clock {
-    text-align: center;
-    margin-top: 30px;
-
-    color: #aaa5bd;
-    font-size: 18px;
-}
-
-/* FOOTER */
-
-footer {
-    text-align: center;
-    margin-top: 70px;
-
-    color: #777286;
-}
-
-/* CLICK EFFECT */
-
-.spark {
-    position: fixed;
-
-    width: 8px;
-    height: 8px;
-
-    border-radius: 50%;
-
-    pointer-events: none;
-    z-index: 99;
-
-    background: white;
-
-    box-shadow:
-        0 0 15px #fff,
-        0 0 30px #ff63d7;
-
-    animation: spark .7s ease-out forwards;
-}
-
-@keyframes spark {
-    to {
-        transform:
-            translate(
-                var(--x),
-                var(--y)
-            )
-            scale(0);
-
-        opacity: 0;
-    }
-}
-
-/* MOBILE */
-
-@media(max-width:600px) {
-
-    .navbar {
-        padding: 12px 15px;
-    }
-
-    .hero {
-        padding-top: 70px;
-    }
-
-    .hero h1 {
-        font-size: 65px;
-    }
-
-    .hero p {
-        font-size: 16px;
-    }
-
-    .cards {
-        grid-template-columns: 1fr;
-    }
+@media(max-width:600px){
+    .game{height:400px}
+    .hero{padding-top:25px}
+    .hero h1{font-size:60px}
 }
 </style>
 </head>
 
 <body>
 
-<!-- BUBBLES -->
+<header>
+    <div class="logo">NEON PLAYGROUND</div>
+    <div class="coins">◈ <span id="coins">0</span> COINS</div>
+</header>
 
-<div class="bubbles">
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
+<main>
+
+<section class="hero">
+    <h1>PLAY.<br>HAVE FUN.</h1>
+    <p>Không có mục đích gì cả. Vào đây chơi cho vui.</p>
+</section>
+
+<div class="tabs">
+    <button class="tab active" onclick="tab('aim',this)">🎯 AIM</button>
+    <button class="tab" onclick="tab('reaction',this)">⚡ REACTION</button>
+    <button class="tab" onclick="tab('lucky',this)">🎲 LUCKY</button>
+    <button class="tab" onclick="tab('shop',this)">🛒 SHOP</button>
 </div>
 
-<div class="container">
+<!-- AIM -->
 
-    <!-- NAVBAR -->
+<section id="aim" class="panel active">
 
-    <nav class="navbar">
+<div class="game">
 
-        <div class="logo">
-            🫧 BUBBLE WORLD
-        </div>
-
-        <div class="nav-buttons">
-
-            <button
-                class="icon-btn"
-                onclick="changeTheme()"
-                title="Đổi màu">
-                🎨
-            </button>
-
-            <button
-                class="icon-btn"
-                onclick="toggleSound()"
-                title="Âm thanh">
-                🔊
-            </button>
-
-        </div>
-
-    </nav>
-
-
-    <!-- HERO -->
-
-    <section class="hero">
-
-        <div class="badge">
-            ✨ Welcome to my little universe
-        </div>
-
-        <h1>
-            HELLO<br>
-            WORLD
-        </h1>
-
-        <p>
-            Một góc web nhỏ xíu nhưng đầy màu sắc,
-            hiệu ứng và những thứ linh tinh thú vị 🫧✨
-        </p>
-
-        <button
-            class="main-btn"
-            onclick="doSomething()">
-
-            ✨ Làm gì đó!
-
-        </button>
-
-    </section>
-
-
-    <!-- CARDS -->
-
-    <section class="cards">
-
-        <div class="card">
-
-            <div class="card-icon">
-                🚀
-            </div>
-
-            <h2>
-                Siêu nhanh
-            </h2>
-
-            <p>
-                Chỉ một file HTML nhưng vẫn có animation,
-                hiệu ứng và tương tác.
-            </p>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-icon">
-                🎨
-            </div>
-
-            <h2>
-                Siêu đẹp
-            </h2>
-
-            <p>
-                Glassmorphism kết hợp font bong bóng
-                và gradient phát sáng.
-            </p>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-icon">
-                🫧
-            </div>
-
-            <h2>
-                Bubble Mode
-            </h2>
-
-            <p>
-                Bong bóng bay liên tục trong background
-                tạo cảm giác sống động.
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- COUNTER -->
-
-    <div class="counter">
-
-        <div>
-            <div style="color:#aaa5bd">
-                Bạn đã click
-            </div>
-
-            <div class="number" id="count">
-                0
-            </div>
-
-            <div style="color:#aaa5bd">
-                lần ✨
-            </div>
-        </div>
-
-        <button
-            class="main-btn"
-            onclick="increase()">
-
-            🖱️ Click!
-
-        </button>
-
+    <div class="game-info">
+        <div class="stat">SCORE: <b id="score">0</b></div>
+        <div class="stat">TIME: <b id="time">30</b></div>
+        <div class="stat">COMBO: <b id="combo">0</b></div>
     </div>
 
-
-    <!-- CLOCK -->
-
-    <div class="clock">
-        🕐 <span id="clock">00:00:00</span>
+    <div class="start" id="aimStart">
+        <button onclick="startAim()">START GAME</button>
     </div>
 
-
-    <footer>
-        Made with 🫧 + ✨ + ❤️
-    </footer>
+    <div class="target" id="target" onclick="hit(event)"></div>
 
 </div>
 
+<div class="result">
+    BEST SCORE: <b id="best">0</b>
+</div>
+
+</section>
+
+<!-- REACTION -->
+
+<section id="reaction" class="panel">
+
+<div
+    id="reactionBox"
+    class="reaction"
+    onclick="reactionClick()">
+
+    <div>
+        <h2 id="reactionText">READY?</h2>
+        <p id="reactionSub">Bấm để bắt đầu</p>
+    </div>
+
+</div>
+
+<div class="result">
+    Best reaction:
+    <b id="bestReaction">--</b> ms
+</div>
+
+</section>
+
+<!-- LUCKY -->
+
+<section id="lucky" class="panel">
+
+<div class="lucky">
+
+    <h2>LUCKY BOX</h2>
+
+    <p>Thử vận may của bạn.</p>
+
+    <div
+        class="lucky-result"
+        id="luckyResult">
+        ???
+    </div>
+
+    <button class="bigbtn" onclick="luckyBox()">
+        OPEN BOX
+    </button>
+
+</div>
+
+</section>
+
+<!-- SHOP -->
+
+<section id="shop" class="panel">
+
+<div class="card-grid">
+
+<div class="card shop-item">
+    <div>
+        <h2>⚡ Neon</h2>
+        <p>Đổi màu giao diện.</p>
+    </div>
+    <button class="buy" onclick="buy(50,'neon')">50 ◈</button>
+</div>
+
+<div class="card shop-item">
+    <div>
+        <h2>💎 Rich</h2>
+        <p>Chỉ để flex.</p>
+    </div>
+    <button class="buy" onclick="buy(100,'rich')">100 ◈</button>
+</div>
+
+<div class="card shop-item">
+    <div>
+        <h2>👑 King</h2>
+        <p>Skin đặc biệt.</p>
+    </div>
+    <button class="buy" onclick="buy(250,'king')">250 ◈</button>
+</div>
+
+</div>
+
+</section>
+
+<footer>
+    NEON PLAYGROUND • Made for fun
+</footer>
+
+</main>
+
+<div class="toast" id="toast"></div>
 
 <script>
 
-let count = 0;
-let sound = true;
+/* DATA */
 
-const themes = [
-    ["#9b5cff", "#ff62d0"],
-    ["#00c6ff", "#0072ff"],
-    ["#ff7b00", "#ff006e"],
-    ["#00d68f", "#00a6ff"],
-    ["#ff4d6d", "#845ec2"]
-];
+let coins = Number(localStorage.getItem("coins")) || 0;
+let best = Number(localStorage.getItem("best")) || 0;
+let bestReaction =
+    Number(localStorage.getItem("reaction")) || 0;
 
-let themeIndex = 0;
+document.getElementById("coins").textContent = coins;
+document.getElementById("best").textContent = best;
+
+if(bestReaction)
+    document.getElementById("bestReaction").textContent =
+        bestReaction;
 
 
-/* COUNTER */
+/* TABS */
 
-function increase() {
+function tab(id,button){
 
-    count++;
+    document.querySelectorAll(".panel")
+        .forEach(x=>x.classList.remove("active"));
 
-    document.getElementById("count")
-        .textContent = count;
+    document.querySelectorAll(".tab")
+        .forEach(x=>x.classList.remove("active"));
 
-    clickSound();
+    document.getElementById(id)
+        .classList.add("active");
 
+    button.classList.add("active");
 }
 
 
-/* ĐỔI MÀU */
+/* TOAST */
 
-function changeTheme() {
+function toast(text){
 
-    themeIndex++;
+    const t=document.getElementById("toast");
 
-    if (themeIndex >= themes.length) {
-        themeIndex = 0;
+    t.textContent=text;
+    t.classList.add("show");
+
+    setTimeout(()=>{
+        t.classList.remove("show");
+    },1800);
+}
+
+
+/* AIM GAME */
+
+let playing=false;
+let score=0;
+let combo=0;
+let time=30;
+let timer;
+
+function startAim(){
+
+    playing=true;
+    score=0;
+    combo=0;
+    time=30;
+
+    document.getElementById("score").textContent=0;
+    document.getElementById("combo").textContent=0;
+    document.getElementById("time").textContent=30;
+
+    document.getElementById("aimStart")
+        .style.display="none";
+
+    spawn();
+
+    timer=setInterval(()=>{
+
+        time--;
+
+        document.getElementById("time")
+            .textContent=time;
+
+        if(time<=0)
+            endAim();
+
+    },1000);
+}
+
+
+function spawn(){
+
+    if(!playing)return;
+
+    const game=document.querySelector(".game");
+    const target=document.getElementById("target");
+
+    const maxX=game.clientWidth-90;
+    const maxY=game.clientHeight-90;
+
+    target.style.left =
+        (Math.random()*maxX+10)+"px";
+
+    target.style.top =
+        (Math.random()*maxY+50)+"px";
+
+    target.style.display="grid";
+}
+
+
+function hit(e){
+
+    if(!playing)return;
+
+    e.stopPropagation();
+
+    score += 10 + combo*2;
+    combo++;
+
+    coins += 1;
+
+    document.getElementById("score")
+        .textContent=score;
+
+    document.getElementById("combo")
+        .textContent=combo;
+
+    document.getElementById("coins")
+        .textContent=coins;
+
+    localStorage.setItem("coins",coins);
+
+    spawn();
+}
+
+
+function endAim(){
+
+    clearInterval(timer);
+    playing=false;
+
+    document.getElementById("target")
+        .style.display="none";
+
+    document.getElementById("aimStart")
+        .style.display="grid";
+
+    if(score>best){
+
+        best=score;
+
+        localStorage.setItem("best",best);
+
+        document.getElementById("best")
+            .textContent=best;
+
+        toast("NEW BEST SCORE!");
+    }
+    else{
+        toast("SCORE: "+score);
+    }
+}
+
+
+/* REACTION GAME */
+
+let reactionState="ready";
+let reactionStart=0;
+let reactionTimer;
+
+function reactionClick(){
+
+    const box=document.getElementById("reactionBox");
+    const text=document.getElementById("reactionText");
+    const sub=document.getElementById("reactionSub");
+
+    if(reactionState==="ready"){
+
+        reactionState="wait";
+
+        box.className="reaction wait";
+
+        text.textContent="WAIT...";
+        sub.textContent="Đừng bấm sớm!";
+
+        const delay =
+            1500 + Math.random()*3500;
+
+        reactionTimer=setTimeout(()=>{
+
+            reactionState="go";
+
+            box.className="reaction go";
+
+            text.textContent="CLICK!";
+            sub.textContent="NGAY!!!";
+
+            reactionStart=performance.now();
+
+        },delay);
+
     }
 
-    document.documentElement
-        .style.setProperty(
-            "--main",
-            themes[themeIndex][0]
+    else if(reactionState==="wait"){
+
+        clearTimeout(reactionTimer);
+
+        reactionState="ready";
+
+        box.className="reaction";
+
+        text.textContent="QUÁ SỚM!";
+        sub.textContent="Bấm để thử lại";
+
+        toast("Bình tĩnh 😭");
+
+    }
+
+    else if(reactionState==="go"){
+
+        const result =
+            Math.round(performance.now()-reactionStart);
+
+        reactionState="ready";
+
+        box.className="reaction";
+
+        text.textContent=result+" MS";
+        sub.textContent="Bấm để chơi lại";
+
+        if(
+            !bestReaction ||
+            result<bestReaction
+        ){
+
+            bestReaction=result;
+
+            localStorage.setItem(
+                "reaction",
+                result
+            );
+
+            document.getElementById(
+                "bestReaction"
+            ).textContent=result;
+
+            toast("NEW REACTION RECORD!");
+
+        }else{
+
+            toast(result+" ms");
+
+        }
+
+        coins += Math.max(
+            1,
+            Math.floor(1000/result*5)
         );
 
-    document.documentElement
-        .style.setProperty(
-            "--main2",
-            themes[themeIndex][1]
-        );
+        document.getElementById("coins")
+            .textContent=coins;
 
-    clickSound();
-
+        localStorage.setItem("coins",coins);
+    }
 }
 
 
-/* ÂM THANH */
+/* LUCKY BOX */
 
-function toggleSound() {
+function luckyBox(){
 
-    sound = !sound;
+    const rewards=[
+        5,
+        10,
+        20,
+        50,
+        100,
+        250,
+        500
+    ];
 
-    const button =
-        document.querySelectorAll(".icon-btn")[1];
+    const chance=Math.random();
 
-    button.textContent =
-        sound ? "🔊" : "🔇";
+    let reward;
 
-}
+    if(chance<.03)
+        reward=500;
+    else if(chance<.10)
+        reward=250;
+    else if(chance<.25)
+        reward=100;
+    else
+        reward=rewards[
+            Math.floor(Math.random()*4)
+        ];
 
+    coins+=reward;
 
-/* SOUND */
+    localStorage.setItem("coins",coins);
 
-function clickSound() {
+    document.getElementById("coins")
+        .textContent=coins;
 
-    if (!sound) return;
+    const result=
+        document.getElementById("luckyResult");
 
-    try {
+    result.textContent=
+        "+"+reward+" COINS";
 
-        const audio =
-            new AudioContext();
-
-        const oscillator =
-            audio.createOscillator();
-
-        const gain =
-            audio.createGain();
-
-        oscillator.frequency.value = 600;
-
-        gain.gain.value = 0.03;
-
-        oscillator.connect(gain);
-        gain.connect(audio.destination);
-
-        oscillator.start();
-
-        oscillator.stop(
-            audio.currentTime + 0.08
-        );
-
-    } catch(e) {}
-
-}
-
-
-/* RANDOM EFFECT */
-
-function doSomething() {
-
-    increase();
-
-    document.body.animate(
+    result.animate(
         [
-            {
-                transform: "scale(1)"
-            },
-            {
-                transform: "scale(1.015)"
-            },
-            {
-                transform: "scale(1)"
-            }
+            {transform:"scale(.5) rotate(-10deg)"},
+            {transform:"scale(1.2) rotate(5deg)"},
+            {transform:"scale(1) rotate(0)"}
         ],
-        {
-            duration: 400
-        }
+        {duration:500}
     );
-
-    for(let i = 0; i < 25; i++) {
-
-        const spark =
-            document.createElement("div");
-
-        spark.className = "spark";
-
-        spark.style.left =
-            Math.random() * innerWidth + "px";
-
-        spark.style.top =
-            Math.random() * innerHeight + "px";
-
-        spark.style.setProperty(
-            "--x",
-            (Math.random() * 300 - 150) + "px"
-        );
-
-        spark.style.setProperty(
-            "--y",
-            (Math.random() * 300 - 150) + "px"
-        );
-
-        document.body.appendChild(spark);
-
-        setTimeout(() => {
-            spark.remove();
-        }, 700);
-
-    }
-
 }
 
 
-/* CLOCK */
+/* SHOP */
 
-function updateClock() {
+function buy(price,item){
 
-    const now = new Date();
+    if(coins<price){
 
-    document.getElementById("clock")
-        .textContent =
-        now.toLocaleTimeString("vi-VN");
-
-}
-
-setInterval(updateClock, 1000);
-
-updateClock();
-
-
-/* CLICK ANYWHERE */
-
-document.addEventListener(
-    "click",
-    function(e) {
-
-        if (
-            e.target.tagName === "BUTTON"
-        ) return;
-
-        for(let i = 0; i < 4; i++) {
-
-            const spark =
-                document.createElement("div");
-
-            spark.className = "spark";
-
-            spark.style.left =
-                e.clientX + "px";
-
-            spark.style.top =
-                e.clientY + "px";
-
-            spark.style.setProperty(
-                "--x",
-                (Math.random() * 100 - 50) + "px"
-            );
-
-            spark.style.setProperty(
-                "--y",
-                (Math.random() * 100 - 50) + "px"
-            );
-
-            document.body.appendChild(spark);
-
-            setTimeout(() => {
-                spark.remove();
-            }, 700);
-        }
-
+        toast("Không đủ coin 💀");
+        return;
     }
-);
+
+    coins-=price;
+
+    localStorage.setItem("coins",coins);
+
+    document.getElementById("coins")
+        .textContent=coins;
+
+    if(item==="neon"){
+
+        document.body.style.background=
+            "radial-gradient(circle at 20% 20%,#ff2e9355,transparent 30%),"+
+            "radial-gradient(circle at 80% 80%,#00ffe044,transparent 30%),"+
+            "#080812";
+
+        toast("NEON SKIN UNLOCKED");
+    }
+
+    if(item==="rich"){
+
+        document.body.style.background=
+            "radial-gradient(circle at 50% 20%,#ffe60055,transparent 30%),"+
+            "radial-gradient(circle at 80% 80%,#ff8c0044,transparent 30%),"+
+            "#090806";
+
+        toast("RICH MODE ACTIVATED");
+    }
+
+    if(item==="king"){
+
+        document.body.style.background=
+            "radial-gradient(circle at 50% 20%,#ff00cc66,transparent 30%),"+
+            "radial-gradient(circle at 80% 80%,#7c00ff66,transparent 30%),"+
+            "#09000f";
+
+        toast("👑 KING MODE");
+    }
+}
 
 </script>
 
