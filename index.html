@@ -1,11 +1,934 @@
+```html
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <title>Web của tôi</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Bubble World ✨</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --main: #9b5cff;
+    --main2: #ff62d0;
+    --blue: #55c7ff;
+    --text: #ffffff;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: 'Baloo 2', cursive;
+    color: var(--text);
+
+    background:
+        radial-gradient(circle at 20% 20%, #7b42ff55, transparent 30%),
+        radial-gradient(circle at 80% 30%, #ff43c755, transparent 30%),
+        radial-gradient(circle at 50% 90%, #00c8ff44, transparent 35%),
+        #090719;
+
+    background-size: 200% 200%;
+    animation: backgroundMove 12s ease infinite;
+}
+
+@keyframes backgroundMove {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+}
+
+/* BONG BÓNG */
+
+.bubbles {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.bubble {
+    position: absolute;
+    bottom: -150px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(circle at 30% 25%,
+        #ffffffaa 0%,
+        #ffffff22 15%,
+        transparent 45%);
+
+    border: 1px solid #ffffff44;
+
+    box-shadow:
+        inset 0 0 25px #ffffff22,
+        0 0 25px #ffffff18;
+
+    animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+    from {
+        transform: translateY(0) translateX(0) rotate(0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(-120vh) translateX(100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.bubble:nth-child(1) {
+    width: 90px;
+    height: 90px;
+    left: 8%;
+    animation-duration: 12s;
+}
+
+.bubble:nth-child(2) {
+    width: 45px;
+    height: 45px;
+    left: 22%;
+    animation-duration: 8s;
+    animation-delay: 2s;
+}
+
+.bubble:nth-child(3) {
+    width: 130px;
+    height: 130px;
+    left: 40%;
+    animation-duration: 16s;
+    animation-delay: 4s;
+}
+
+.bubble:nth-child(4) {
+    width: 60px;
+    height: 60px;
+    left: 65%;
+    animation-duration: 10s;
+    animation-delay: 1s;
+}
+
+.bubble:nth-child(5) {
+    width: 110px;
+    height: 110px;
+    left: 85%;
+    animation-duration: 14s;
+    animation-delay: 3s;
+}
+
+/* CONTAINER */
+
+.container {
+    position: relative;
+    z-index: 2;
+
+    width: min(1100px, 92%);
+    margin: auto;
+    padding: 35px 0 60px;
+}
+
+/* NAVBAR */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 15px 22px;
+
+    border: 1px solid #ffffff22;
+    border-radius: 25px;
+
+    background: #ffffff0d;
+    backdrop-filter: blur(18px);
+
+    box-shadow:
+        0 10px 40px #00000033,
+        inset 0 0 20px #ffffff08;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: 800;
+
+    background: linear-gradient(
+        90deg,
+        #fff,
+        #ff7de3,
+        #6ddcff,
+        #fff
+    );
+
+    background-size: 300%;
+    -webkit-background-clip: text;
+    color: transparent;
+
+    animation: rainbow 5s linear infinite;
+}
+
+@keyframes rainbow {
+    to {
+        background-position: 300%;
+    }
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.icon-btn {
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid #ffffff20;
+    border-radius: 50%;
+
+    background: #ffffff0d;
+    color: white;
+
+    cursor: pointer;
+    font-size: 18px;
+
+    transition: .3s;
+}
+
+.icon-btn:hover {
+    transform: translateY(-4px) scale(1.1);
+    background: #ffffff22;
+}
+
+/* HERO */
+
+.hero {
+    text-align: center;
+    padding: 90px 10px 60px;
+}
+
+.badge {
+    display: inline-block;
+
+    padding: 8px 18px;
+    margin-bottom: 20px;
+
+    border: 1px solid #ffffff25;
+    border-radius: 999px;
+
+    background: #ffffff0c;
+    backdrop-filter: blur(10px);
+
+    color: #dcd2ff;
+    font-size: 15px;
+}
+
+.hero h1 {
+    font-size: clamp(55px, 10vw, 115px);
+    line-height: .85;
+
+    font-weight: 800;
+
+    letter-spacing: -3px;
+
+    background: linear-gradient(
+        135deg,
+        #ffffff,
+        #e8c5ff,
+        #ff72db,
+        #62d9ff
+    );
+
+    -webkit-background-clip: text;
+    color: transparent;
+
+    filter: drop-shadow(0 10px 30px #9b5cff44);
+}
+
+.hero p {
+    max-width: 600px;
+    margin: 30px auto;
+
+    color: #c9c4dc;
+    font-size: 19px;
+}
+
+/* BUTTON */
+
+.main-btn {
+    position: relative;
+
+    border: none;
+    border-radius: 999px;
+
+    padding: 15px 30px;
+
+    font-family: inherit;
+    font-size: 18px;
+    font-weight: 700;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--main),
+            var(--main2)
+        );
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 30px #9b5cff55;
+
+    transition: .3s;
+
+    overflow: hidden;
+}
+
+.main-btn::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -100%;
+
+    width: 100%;
+    height: 100%;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #ffffff66,
+        transparent
+    );
+
+    transition: .5s;
+}
+
+.main-btn:hover::before {
+    left: 100%;
+}
+
+.main-btn:hover {
+    transform: translateY(-5px) scale(1.04);
+    box-shadow:
+        0 15px 40px #ff62d055;
+}
+
+/* CARDS */
+
+.cards {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(230px, 1fr));
+
+    gap: 20px;
+}
+
+.card {
+    position: relative;
+
+    padding: 28px;
+
+    min-height: 190px;
+
+    border-radius: 30px;
+
+    border: 1px solid #ffffff18;
+
+    background: linear-gradient(
+        145deg,
+        #ffffff12,
+        #ffffff05
+    );
+
+    backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 15px 40px #00000022,
+        inset 0 0 30px #ffffff08;
+
+    overflow: hidden;
+
+    transition: .35s;
+}
+
+.card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 130px;
+    height: 130px;
+
+    right: -50px;
+    top: -50px;
+
+    border-radius: 50%;
+
+    background: #ffffff08;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    border-color: #ffffff35;
+
+    box-shadow:
+        0 25px 60px #00000044,
+        0 0 30px #9b5cff22;
+}
+
+.card-icon {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.card h2 {
+    font-size: 25px;
+}
+
+.card p {
+    margin-top: 5px;
+    color: #aaa5bd;
+}
+
+/* COUNTER */
+
+.counter {
+    margin-top: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+    padding: 25px;
+
+    border-radius: 30px;
+
+    background: #ffffff09;
+    border: 1px solid #ffffff15;
+
+    backdrop-filter: blur(15px);
+}
+
+.number {
+    font-size: 50px;
+    font-weight: 800;
+
+    background: linear-gradient(
+        135deg,
+        #fff,
+        #ff70d8,
+        #69d9ff
+    );
+
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+/* CLOCK */
+
+.clock {
+    text-align: center;
+    margin-top: 30px;
+
+    color: #aaa5bd;
+    font-size: 18px;
+}
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    margin-top: 70px;
+
+    color: #777286;
+}
+
+/* CLICK EFFECT */
+
+.spark {
+    position: fixed;
+
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+    z-index: 99;
+
+    background: white;
+
+    box-shadow:
+        0 0 15px #fff,
+        0 0 30px #ff63d7;
+
+    animation: spark .7s ease-out forwards;
+}
+
+@keyframes spark {
+    to {
+        transform:
+            translate(
+                var(--x),
+                var(--y)
+            )
+            scale(0);
+
+        opacity: 0;
+    }
+}
+
+/* MOBILE */
+
+@media(max-width:600px) {
+
+    .navbar {
+        padding: 12px 15px;
+    }
+
+    .hero {
+        padding-top: 70px;
+    }
+
+    .hero h1 {
+        font-size: 65px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
 </head>
+
 <body>
-    <h1>Xin chào 👋</h1>
-    <p>Đây là web HTML đầu tiên của tôi.</p>
+
+<!-- BUBBLES -->
+
+<div class="bubbles">
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+</div>
+
+<div class="container">
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🫧 BUBBLE WORLD
+        </div>
+
+        <div class="nav-buttons">
+
+            <button
+                class="icon-btn"
+                onclick="changeTheme()"
+                title="Đổi màu">
+                🎨
+            </button>
+
+            <button
+                class="icon-btn"
+                onclick="toggleSound()"
+                title="Âm thanh">
+                🔊
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="badge">
+            ✨ Welcome to my little universe
+        </div>
+
+        <h1>
+            HELLO<br>
+            WORLD
+        </h1>
+
+        <p>
+            Một góc web nhỏ xíu nhưng đầy màu sắc,
+            hiệu ứng và những thứ linh tinh thú vị 🫧✨
+        </p>
+
+        <button
+            class="main-btn"
+            onclick="doSomething()">
+
+            ✨ Làm gì đó!
+
+        </button>
+
+    </section>
+
+
+    <!-- CARDS -->
+
+    <section class="cards">
+
+        <div class="card">
+
+            <div class="card-icon">
+                🚀
+            </div>
+
+            <h2>
+                Siêu nhanh
+            </h2>
+
+            <p>
+                Chỉ một file HTML nhưng vẫn có animation,
+                hiệu ứng và tương tác.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                🎨
+            </div>
+
+            <h2>
+                Siêu đẹp
+            </h2>
+
+            <p>
+                Glassmorphism kết hợp font bong bóng
+                và gradient phát sáng.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                🫧
+            </div>
+
+            <h2>
+                Bubble Mode
+            </h2>
+
+            <p>
+                Bong bóng bay liên tục trong background
+                tạo cảm giác sống động.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- COUNTER -->
+
+    <div class="counter">
+
+        <div>
+            <div style="color:#aaa5bd">
+                Bạn đã click
+            </div>
+
+            <div class="number" id="count">
+                0
+            </div>
+
+            <div style="color:#aaa5bd">
+                lần ✨
+            </div>
+        </div>
+
+        <button
+            class="main-btn"
+            onclick="increase()">
+
+            🖱️ Click!
+
+        </button>
+
+    </div>
+
+
+    <!-- CLOCK -->
+
+    <div class="clock">
+        🕐 <span id="clock">00:00:00</span>
+    </div>
+
+
+    <footer>
+        Made with 🫧 + ✨ + ❤️
+    </footer>
+
+</div>
+
+
+<script>
+
+let count = 0;
+let sound = true;
+
+const themes = [
+    ["#9b5cff", "#ff62d0"],
+    ["#00c6ff", "#0072ff"],
+    ["#ff7b00", "#ff006e"],
+    ["#00d68f", "#00a6ff"],
+    ["#ff4d6d", "#845ec2"]
+];
+
+let themeIndex = 0;
+
+
+/* COUNTER */
+
+function increase() {
+
+    count++;
+
+    document.getElementById("count")
+        .textContent = count;
+
+    clickSound();
+
+}
+
+
+/* ĐỔI MÀU */
+
+function changeTheme() {
+
+    themeIndex++;
+
+    if (themeIndex >= themes.length) {
+        themeIndex = 0;
+    }
+
+    document.documentElement
+        .style.setProperty(
+            "--main",
+            themes[themeIndex][0]
+        );
+
+    document.documentElement
+        .style.setProperty(
+            "--main2",
+            themes[themeIndex][1]
+        );
+
+    clickSound();
+
+}
+
+
+/* ÂM THANH */
+
+function toggleSound() {
+
+    sound = !sound;
+
+    const button =
+        document.querySelectorAll(".icon-btn")[1];
+
+    button.textContent =
+        sound ? "🔊" : "🔇";
+
+}
+
+
+/* SOUND */
+
+function clickSound() {
+
+    if (!sound) return;
+
+    try {
+
+        const audio =
+            new AudioContext();
+
+        const oscillator =
+            audio.createOscillator();
+
+        const gain =
+            audio.createGain();
+
+        oscillator.frequency.value = 600;
+
+        gain.gain.value = 0.03;
+
+        oscillator.connect(gain);
+        gain.connect(audio.destination);
+
+        oscillator.start();
+
+        oscillator.stop(
+            audio.currentTime + 0.08
+        );
+
+    } catch(e) {}
+
+}
+
+
+/* RANDOM EFFECT */
+
+function doSomething() {
+
+    increase();
+
+    document.body.animate(
+        [
+            {
+                transform: "scale(1)"
+            },
+            {
+                transform: "scale(1.015)"
+            },
+            {
+                transform: "scale(1)"
+            }
+        ],
+        {
+            duration: 400
+        }
+    );
+
+    for(let i = 0; i < 25; i++) {
+
+        const spark =
+            document.createElement("div");
+
+        spark.className = "spark";
+
+        spark.style.left =
+            Math.random() * innerWidth + "px";
+
+        spark.style.top =
+            Math.random() * innerHeight + "px";
+
+        spark.style.setProperty(
+            "--x",
+            (Math.random() * 300 - 150) + "px"
+        );
+
+        spark.style.setProperty(
+            "--y",
+            (Math.random() * 300 - 150) + "px"
+        );
+
+        document.body.appendChild(spark);
+
+        setTimeout(() => {
+            spark.remove();
+        }, 700);
+
+    }
+
+}
+
+
+/* CLOCK */
+
+function updateClock() {
+
+    const now = new Date();
+
+    document.getElementById("clock")
+        .textContent =
+        now.toLocaleTimeString("vi-VN");
+
+}
+
+setInterval(updateClock, 1000);
+
+updateClock();
+
+
+/* CLICK ANYWHERE */
+
+document.addEventListener(
+    "click",
+    function(e) {
+
+        if (
+            e.target.tagName === "BUTTON"
+        ) return;
+
+        for(let i = 0; i < 4; i++) {
+
+            const spark =
+                document.createElement("div");
+
+            spark.className = "spark";
+
+            spark.style.left =
+                e.clientX + "px";
+
+            spark.style.top =
+                e.clientY + "px";
+
+            spark.style.setProperty(
+                "--x",
+                (Math.random() * 100 - 50) + "px"
+            );
+
+            spark.style.setProperty(
+                "--y",
+                (Math.random() * 100 - 50) + "px"
+            );
+
+            document.body.appendChild(spark);
+
+            setTimeout(() => {
+                spark.remove();
+            }, 700);
+        }
+
+    }
+);
+
+</script>
+
 </body>
 </html>
+```
